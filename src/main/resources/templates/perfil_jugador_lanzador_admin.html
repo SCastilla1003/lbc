@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Perfil de Jugador Lanzador</title>
+    <link rel="stylesheet" href="/css/stylehome.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header id="inicio">
+        <img src="https://i.ibb.co/Bz7h7YK/Recurso-5-100.jpg" alt="Banner Liga de Béisbol de Bolívar" />
+        <h1>Liga de Béisbol de Cartagena</h1>
+        <p>Bienvenido al sistema de gestión de la liga</p>
+        <div>
+            <h2>Temporada Actual: 2025</h2>
+        </div>
+    </header>
+
+    <!-- Navegación -->
+    <nav>
+        <a th:href="@{/admin/listar-jugadores-equipo/{idTemporada}/{indexEquipo}(idTemporada=${idTemporada}, indexEquipo=${indexEquipo})}">
+            Volver
+        </a>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <header>
+            <h1>Perfil de Jugador Lanzador: [[${lanzador.nombre}]]</h1>
+        </header>
+
+        <section>
+            <h2>Detalles del Jugador Lanzador</h2>
+            <ul>
+                <li><strong>Nombre:</strong> [[${lanzador.nombre}]]</li>
+                <li><strong>Edad:</strong> [[${lanzador.edad}]] años</li>
+                <li><strong>Posición:</strong> [[${lanzador.posicion}]]</li>
+                <li><strong>Mano de Lanzamiento:</strong> [[${lanzador.derecho_zurdo}]]</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Estadísticas de Lanzador</h2>
+            <ul>
+                <li><strong>Número de Lanzamientos:</strong> [[${lanzador.numeroLanzamientos}]]</li>
+                <li><strong>Innings Lanzados:</strong> [[${lanzador.inningsLanzados}]]</li>
+                <li><strong>Ponchados:</strong> [[${lanzador.ponchados}]]</li>
+                <li><strong>Bases por Bola (BB):</strong> [[${lanzador.basePorBola}]]</li>
+                <li><strong>Carreras Permitidas:</strong> [[${lanzador.carrerasPermitidas}]]</li>
+                <li><strong>Hits Permitidos:</strong> [[${lanzador.hitsPermitidos}]]</li>
+                <li><strong>Apariciones al Plato:</strong> [[${lanzador.aparicionesPlato}]]</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Gráficos de Desempeño del Lanzador</h2>
+
+            <!-- Pie Chart -->
+            <div id="pieChart"
+                 th:data-ponchados="${lanzador.ponchados}"
+                 th:data-bb="${lanzador.basePorBola}"
+                 th:data-carreras="${lanzador.carrerasPermitidas}"
+                 th:data-hits="${lanzador.hitsPermitidos}"
+                 style="width: 500px; height: 350px;">
+            </div>
+
+            <!-- Bar Chart -->
+            <div id="barChart"
+                 th:data-ponchados="${lanzador.ponchados}"
+                 th:data-bb="${lanzador.basePorBola}"
+                 th:data-carreras="${lanzador.carrerasPermitidas}"
+                 th:data-hits="${lanzador.hitsPermitidos}"
+                 style="width: 500px; height: 350px; margin-top: 20px;">
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Liga de Béisbol de Cartagena</p>
+    </footer>
+
+    <script>
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            drawPieChart();
+            drawBarChart();
+        }
+
+        function drawPieChart() {
+            const chartDiv = document.getElementById('pieChart');
+            const data = google.visualization.arrayToDataTable([
+                ['Estadística', 'Cantidad'],
+                ['Ponchados', Number(chartDiv.dataset.ponchados)],
+                ['Base por Bola', Number(chartDiv.dataset.bb)],
+                ['Carreras Permitidas', Number(chartDiv.dataset.carreras)],
+                ['Hits Permitidos', Number(chartDiv.dataset.hits)]
+            ]);
+
+            const options = {
+                title: 'Distribución de Rendimiento del Lanzador',
+                pieHole: 0.4,
+                colors: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0']
+            };
+
+            const chart = new google.visualization.PieChart(chartDiv);
+            chart.draw(data, options);
+        }
+
+        function drawBarChart() {
+            const chartDiv = document.getElementById('barChart');
+            const data = google.visualization.arrayToDataTable([
+                ['Estadística', 'Cantidad', { role: 'style' }],
+                ['Ponchados', Number(chartDiv.dataset.ponchados), '#36A2EB'],
+                ['Base por Bola', Number(chartDiv.dataset.bb), '#FF6384'],
+                ['Carreras', Number(chartDiv.dataset.carreras), '#FFCE56'],
+                ['Hits permitidos', Number(chartDiv.dataset.hits), '#4BC0C0']
+            ]);
+
+            const options = {
+                title: 'Resumen de Estadísticas del Lanzador',
+                legend: { position: 'none' },
+                vAxis: { minValue: 0, format: '0' }
+            };
+
+            const chart = new google.visualization.ColumnChart(chartDiv);
+            chart.draw(data, options);
+        }
+    </script>
+</body>
+</html>

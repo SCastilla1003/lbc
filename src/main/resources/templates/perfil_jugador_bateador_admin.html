@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Perfil de Jugador Bateador</title>
+    <link rel="stylesheet" href="/css/stylehome.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <!-- Header con el banner y el título -->
+    <header id="inicio">
+        <img src="https://i.ibb.co/Bz7h7YK/Recurso-5-100.jpg" alt="Banner Liga de Béisbol de Bolívar" />
+        <h1>Liga de Béisbol de Cartagena</h1>
+        <p>Bienvenido al sistema de gestión de la liga</p>
+        <div>
+            <h2>Temporada Actual: 2025</h2>
+        </div>
+    </header>
+
+    <!-- Navegación -->
+    <nav>
+        <a th:href="@{/admin/listar-jugadores-equipo/{idTemporada}/{indexEquipo}(idTemporada=${idTemporada}, indexEquipo=${indexEquipo})}">
+          Volver
+        </a>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <header>
+            <h1>Perfil de Jugador: [[${bateador.nombre}]]</h1>
+        </header>
+
+        <section>
+            <h2>Detalles del Jugador Bateador</h2>
+            <ul>
+                <li><strong>Nombre:</strong> [[${bateador.nombre}]]</li>
+                <li><strong>Edad:</strong> [[${bateador.edad}]] años</li>
+                <li><strong>Posición:</strong> [[${bateador.posicion}]]</li>
+                <li><strong>Mano de Bateo:</strong> [[${bateador.derecho_zurdo}]]</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Estadísticas Ofensivas</h2>
+            <ul>
+                <li><strong>Home Runs (HR):</strong> [[${bateador.homeRuns}]]</li>
+                <li><strong>Triples (3B):</strong> [[${bateador.triples}]]</li>
+                <li><strong>Dobles (2B):</strong> [[${bateador.dobles}]]</li>
+                <li><strong>Sencillos (1B):</strong> [[${bateador.sencillos}]]</li>
+                <li><strong>Ponches:</strong> [[${bateador.ponches}]]</li>
+            </ul>
+			<section>
+			    <h2>Gráfico de Estadísticas Ofensivas</h2>
+
+			    <!-- Pie Chart -->
+			    <div id="pieChart"
+			         th:data-hr="${bateador.homeRuns}"
+			         th:data-triples="${bateador.triples}"
+			         th:data-dobles="${bateador.dobles}"
+			         th:data-sencillos="${bateador.sencillos}"
+			         th:data-ponches="${bateador.ponches}"
+			         style="width: 500px; height: 350px;">
+			    </div>
+
+			    <!-- Bar Chart -->
+			    <div id="barChart"
+			         th:data-hr="${bateador.homeRuns}"
+			         th:data-triples="${bateador.triples}"
+			         th:data-dobles="${bateador.dobles}"
+			         th:data-sencillos="${bateador.sencillos}"
+			         th:data-ponches="${bateador.ponches}"
+			         style="width: 500px; height: 350px; margin-top: 20px;">
+			    </div>
+			</section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Liga de Béisbol de Cartagena</p>
+    </footer>
+
+	<script>
+	    google.charts.load('current', {packages: ['corechart']});
+	    google.charts.setOnLoadCallback(drawCharts);
+
+	    function drawCharts() {
+	        drawPieChart();
+	        drawBarChart();
+	    }
+
+	    function drawPieChart() {
+	        const chartDiv = document.getElementById('pieChart');
+	        const data = google.visualization.arrayToDataTable([
+	            ['Estadística', 'Cantidad'],
+	            ['Home Runs', Number(chartDiv.dataset.hr)],
+	            ['Triples', Number(chartDiv.dataset.triples)],
+	            ['Dobles', Number(chartDiv.dataset.dobles)],
+	            ['Sencillos', Number(chartDiv.dataset.sencillos)],
+	            ['Ponches', Number(chartDiv.dataset.ponches)]
+	        ]);
+
+	        const options = {
+	            title: 'Distribución de Estadísticas Ofensivas',
+	            pieHole: 0.4,
+	            colors: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+	        };
+
+	        const chart = new google.visualization.PieChart(chartDiv);
+	        chart.draw(data, options);
+	    }
+
+	    function drawBarChart() {
+	        const chartDiv = document.getElementById('barChart');
+	        const data = google.visualization.arrayToDataTable([
+	            ['Estadística', 'Cantidad', { role: 'style' }],
+	            ['Home Runs', Number(chartDiv.dataset.hr), '#FF6384'],
+	            ['Triples', Number(chartDiv.dataset.triples), '#36A2EB'],
+	            ['Dobles', Number(chartDiv.dataset.dobles), '#FFCE56'],
+	            ['Sencillos', Number(chartDiv.dataset.sencillos), '#4BC0C0'],
+	            ['Ponches', Number(chartDiv.dataset.ponches), '#9966FF']
+	        ]);
+
+	        const options = {
+	            title: 'Resumen de Estadísticas Ofensivas',
+	            legend: { position: 'none' },
+	            vAxis: { minValue: 0, format: '0' }
+	        };
+
+	        const chart = new google.visualization.ColumnChart(chartDiv);
+	        chart.draw(data, options);
+	    }
+	</script>
+
+
+
+
+
+</body>
+</html>

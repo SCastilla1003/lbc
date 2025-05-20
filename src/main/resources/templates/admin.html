@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" th:href="@{/css/stylehome.css}">
+</head>
+<body>
+
+<header>
+    <img src="https://i.ibb.co/Bz7h7YK/Recurso-5-100.jpg" alt="Banner Liga de Béisbol de Bolívar">
+    <h1>Panel de Administración</h1>
+    <h2>Gestión de Temporadas, Equipos y Jugadores</h2>
+</header>
+
+<nav>
+    <a href="/">Volver</a>
+</nav>
+
+<main>
+    <section style="text-align: center;">
+        <h2>Bienvenido, Administrador</h2>
+        <p>Accede a las herramientas para gestionar temporadas, equipos y jugadores.</p>
+
+        <div style="margin-top: 2rem;">
+            <a href="/admin/listar-temporadas" class="btn">Administrar Temporadas</a>
+            <a href="/admin/listar-equipos" class="btn">Administrar Equipos</a>
+            <a href="/admin/jugadores" class="btn">Administrar Jugadores</a>
+			<a href="/admin/listar-temporadas-partidos" class="btn">Administrar Partidos</a>
+			<a href="/admin/listar-temporadas-estadios" class="btn">Administrar Estadios</a>
+        </div>
+    </section>
+	<div style="display: flex; justify-content: center; margin-top: 2rem;">
+	        <form th:action="@{/logout}" method="post" style="display: inline;">
+	            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	            <button type="submit" class="btn" style="background-color: crimson;">Cerrar sesión</button>
+	        </form>
+	    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Liga de Béisbol de Cartagena</p>
+</footer>
+
+</body>
+</html>

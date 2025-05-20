@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jugadores Temporada - Liga de Béisbol</title>
+  <link rel="stylesheet" href="/css/stylehome.css" />
+</head>
+<body>
+	
+
+<header>
+  <img src="https://i.ibb.co/Bz7h7YK/Recurso-5-100.jpg" alt="Banner Liga de Béisbol de Bolívar">
+  <h1 th:text="'Jugadores de la temporada: ' + ${temporada.nombreTemporada}">Jugadores de la Temporada</h1>
+  <h2>Listado de Equipos y Jugadores</h2>
+</header>
+
+<nav>
+  <a href="/temporadas-jugadores">Volver</a>
+</nav>
+
+<main>
+  <section th:each="equipo, equipoStat : ${temporada.equiposParticipantes}">
+    <h2 th:text="'Equipo: ' + ${equipo.nombre}">Equipo</h2>
+
+    <div>
+      <h3>Bateadores</h3>
+      <table>
+		<thead>
+		  <tr>
+		    <th>Nombre</th>
+		    <th>Edad</th>
+		    <th>Posición</th>
+		    <th>Home Runs</th>
+		    <th>Triples</th>
+		    <th>Dobles</th>
+		    <th>Sencillos</th>
+		    <th>Base por Bola</th>
+		    <th>Base por Golpe</th>
+		    <th>Ponches</th>
+		    <th>Robo de Base</th>
+		    <th>Carreras Impulsadas</th>
+		    <th>Errores</th>
+		    <th>Acciones</th>  <!-- ESTA COLUMNA NUEVA -->
+		  </tr>
+		</thead>
+        <tbody>
+			<tr th:each="bateador, bateadorStat : ${equipo.bateadores}">
+			  <td th:text="${bateador.nombre}">Nombre</td>
+			  <td th:text="${bateador.edad}">Edad</td>
+			  <td th:text="${bateador.posicion}">Posición</td>
+			  <td th:text="${bateador.homeRuns}">Home Runs</td>
+			  <td th:text="${bateador.triples}">Triples</td>
+			  <td th:text="${bateador.dobles}">Dobles</td>
+			  <td th:text="${bateador.sencillos}">Sencillos</td>
+			  <td th:text="${bateador.basePorBola}">Base por Bola</td>
+			  <td th:text="${bateador.basePorGolpe}">Base por Golpe</td>
+			  <td th:text="${bateador.ponches}">Ponches</td>
+			  <td th:text="${bateador.roboDeBase}">Robo de Base</td>
+			  <td th:text="${bateador.carrerasImpulsadas}">Carreras Impulsadas</td>
+			  <td th:text="${bateador.errores}">Errores</td>
+			  <td>
+			    <a th:href="@{'/perfil-bateador/' + ${temporada.id} + '/' + ${equipoStat.index} + '/' + ${bateadorStat.index}}">
+			      <button type="button">Ver Perfil</button>
+			    </a>
+			  </td>
+			</tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+      <h3>Lanzadores</h3>
+      <table>
+		<thead>
+		  <tr>
+		    <th>Nombre</th>
+		    <th>Edad</th>
+		    <th>Posición</th>
+		    <th>Número Lanzamientos</th>
+		    <th>Innings Lanzados</th>
+		    <th>Ponchados</th>
+		    <th>Base por Bola</th>
+		    <th>Carreras Permitidas</th>
+		    <th>Hits Permitidos</th>
+		    <th>Apariciones al Plato</th>
+		    <th>Acciones</th>  <!-- ESTA COLUMNA NUEVA -->
+		  </tr>
+		</thead>
+        <tbody>
+			<tr th:each="lanzador, lanzadorStat : ${equipo.lanzadores}">
+			  <td th:text="${lanzador.nombre}">Nombre</td>
+			  <td th:text="${lanzador.edad}">Edad</td>
+			  <td th:text="${lanzador.posicion}">Posición</td>
+			  <td th:text="${lanzador.numeroLanzamientos}">Número Lanzamientos</td>
+			  <td th:text="${lanzador.inningsLanzados}">Innings Lanzados</td>
+			  <td th:text="${lanzador.ponchados}">Ponchados</td>
+			  <td th:text="${lanzador.basePorBola}">Base por Bola</td>
+			  <td th:text="${lanzador.carrerasPermitidas}">Carreras Permitidas</td>
+			  <td th:text="${lanzador.hitsPermitidos}">Hits Permitidos</td>
+			  <td th:text="${lanzador.aparicionesPlato}">Apariciones al Plato</td>
+			  <td>
+			    <a th:href="@{'/perfil-lanzador/' + ${temporada.id} + '/' + ${equipoStat.index} + '/' + ${lanzadorStat.index}}">
+			      <button type="button">Ver Perfil</button>
+			    </a>
+			  </td>
+			</tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 Liga de Béisbol de Cartagena</p>
+</footer>
+
+<style>
+	
+	main {
+	  max-width: 900px;
+	  margin: 2rem auto;
+	  padding: 1rem;
+	  background: #f9f9f9;
+	  border-radius: 8px;
+	  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+	  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	  color: #333;
+	}
+
+	section {
+	  margin-bottom: 3rem;
+	  border-bottom: 2px solid #ccc;
+	  padding-bottom: 2rem;
+	}
+
+	section h2 {
+	  color: #0a5a8f;
+	  margin-bottom: 1rem;
+	  border-left: 5px solid #0a5a8f;
+	  padding-left: 10px;
+	  font-weight: 700;
+	}
+
+	h3 {
+	  color: #1d4d73;
+	  margin-bottom: 0.5rem;
+	  font-weight: 600;
+	}
+
+	table {
+	  width: 100%;
+	  border-collapse: collapse;
+	  margin-top: 0.5rem;
+	  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+	  background: #fff;
+	  border-radius: 5px;
+	  overflow: hidden;
+	}
+
+	thead {
+	  background-color: #0a5a8f;
+	  color: #fff;
+	}
+
+	thead th {
+	  padding: 0.75rem 0.5rem;
+	  font-weight: 600;
+	  font-size: 0.9rem;
+	  text-align: left;
+	}
+
+	tbody tr:hover {
+	  background-color: #e1f0ff;
+	  cursor: default;
+	}
+
+	tbody td {
+	  padding: 0.5rem 0.5rem;
+	  border-bottom: 1px solid #ddd;
+	  font-size: 0.85rem;
+	  color: #444;
+	}
+
+	
+</style>
+
+</body>
+</html>

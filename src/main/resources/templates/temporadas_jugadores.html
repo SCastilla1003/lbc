@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Temporadas</title>
+    <link rel="stylesheet" th:href="@{/css/stylehome.css}">
+</head>
+<body>
+    <!-- Header con banner e información general -->
+    <header id="inicio">
+        <img src="https://i.ibb.co/Bz7h7YK/Recurso-5-100.jpg" alt="Banner Liga de Béisbol de Bolívar">
+        <h1>Liga de Béisbol de Cartagena</h1>
+        <p>Bienvenido al sistema de gestión de la liga</p>
+        <div>
+            <h2>Temporada Actual: 2025</h2>
+        </div>
+    </header>
+
+    <!-- Navegación -->
+	<nav>
+	   	    <a href="/">Volver</a>
+	   	  </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <header>
+            <h1>Temporadas disponibles</h1>
+        </header>
+
+        <!-- Lista de temporadas -->
+        <section>
+                <li th:each="temporada : ${temporadas}">
+                    <a class="btn" th:href="@{'/temporadas-jugadores/' + ${temporada.id}}" th:text="${temporada.nombreTemporada}"></a>
+                </li>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Liga de Béisbol de Cartagena</p>
+    </footer>
+</body>
+</html>

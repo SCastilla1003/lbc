@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/stylehome.css}">
+</head>
+<body>
+
+<main style="max-width: 400px; margin-top: 8rem; padding: 2rem;">
+    <form th:action="@{/login}" method="post" class="login-form" 
+          style="background-color: rgba(255,255,255,0.95); padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+		<h2 style="text-align: center; color: #003580; margin-bottom: 1.5rem;">Iniciar sesión</h2>
+		
+		<!-- Mensaje de error -->
+		<div th:if="${param.error}" 
+		     style="background-color: #ffdddd; color: #a94442; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid #ebccd1; border-radius: 8px;">
+		    Usuario o contraseña incorrectos.
+		</div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <label style="color: #003580; font-weight: bold;">Usuario</label>
+            <input type="text" name="username" required 
+                   style="width: 92%; padding: 0.8rem; margin-top: 0.5rem; border-radius: 8px; border: 1px solid #ccc;" />
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <label style="color: #003580; font-weight: bold;">Contraseña</label>
+            <input type="password" name="password" required 
+                   style="width: 92%; padding: 0.8rem; margin-top: 0.5rem; border-radius: 8px; border: 1px solid #ccc;" />
+        </div>
+
+        <button type="submit" class="btn" style="width: 100%;">Entrar</button>
+    </form>
+	
+	<div style="margin-top: 2rem; text-align: center;">
+	        <a href="/registro" style="width: 85%;" class="btn">Registrarse</a>
+	</div>
+	
+
+    <hr style="margin: 2rem 0;">
+
+    <!-- Botón de Google -->
+    <div style="text-align: center;">
+        <a th:href="@{/oauth2/authorization/google}">
+            <button type="button" class="btn" style="width: 100%; background-color: #db4437; color: white; border: none;">
+                Iniciar sesión con Google
+            </button>
+        </a>
+    </div>
+
+    <div style="margin-top: 2rem; text-align: center;">
+        <a th:href="@{/}" class="btn">Volver al inicio</a>
+    </div>
+</main>
+
+</body>
+</html>
